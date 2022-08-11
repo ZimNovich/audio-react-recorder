@@ -1,12 +1,12 @@
 {
-  "name": "audio-react-recorder",
+  "name": "audio-react-recorder-fixed",
   "version": "1.0.3",
   "description": "Audio / Voice Recorder for React",
   "author": "noobieprogrammer",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/doppelgunner/audio-react-recorder.git"
+    "url": "git+https://github.com/Kineforce/audio-react-recorder.git"
   },
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
@@ -14,7 +14,7 @@
   "engines": {
     "node": ">=10"
   },
-  "homepage": "https://github.com/doppelgunner/audio-react-recorder#readme",
+  "homepage": "https://github.com/Kineforce/audio-react-recorder#readme",
   "keywords": [
     "react",
     "record",
@@ -66,5 +66,8 @@
   ],
   "dependencies": {
     "prop-types": "^15.7.2"
+  },
+  "bugs": {
+    "url": "https://github.com/Kineforce/audio-react-recorder/issues"
   }
 }
