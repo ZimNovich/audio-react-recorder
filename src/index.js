@@ -2,16 +2,30 @@ import React from 'react'
 import styles from './styles.module.css'
 import PropTypes from 'prop-types' // ES6
 
-// export const AudioReactRecorder = ({ text }) => {
-//   return <div className={styles.test}>BULLSWEET: {text}</div>
-// }
-
 export const RecordState = Object.freeze({
   START: 'start',
   PAUSE: 'pause',
   STOP: 'stop',
   NONE: 'none'
 })
+
+export const isMobile = Object.freeze({
+  Windows: function() {
+      return /IEMobile/i.test(navigator.userAgent);
+  },
+  Android: function() {
+      return /Android/i.test(navigator.userAgent);
+  },
+  BlackBerry: function() {
+      return /BlackBerry/i.test(navigator.userAgent);
+  },
+  iOS: function() {
+      return /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  },
+  any: function() {
+      return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Windows());
+  }
+});
 
 export default class AudioReactRecorder extends React.Component {
   //0 - constructor
@@ -153,14 +167,17 @@ export default class AudioReactRecorder extends React.Component {
       let right = e.inputBuffer.getChannelData(1)
       if (!self.tested) {
         self.tested = true
-        // if this reduces to 0 we are not getting any sound
-        if (!left.reduce((a, b) => a + b)) {
-          console.log('Error: There seems to be an issue with your Mic')
-          // clean up;
-          self.stop()
-          self.stream.getTracks().forEach(function (track) {
-            track.stop()
-          })
+        // BUG: Seems that in Android Devices, we're getting a little delay on inputBuffer, then ocasionating on auto stopping the audio recorder
+        if (!isMobile.Android()){
+          // if this reduces to 0 we are not getting any sound
+          if (!left.reduce((a, b) => a + b)) {
+            console.log('Error: There seems to be an issue with your Mic')
+            // clean up;
+            self.stop()
+            self.stream.getTracks().forEach(function (track) {
+              track.stop()
+            })
+          }
         }
       }
       // we clone the samples
